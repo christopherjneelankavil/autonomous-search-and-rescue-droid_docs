@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search and Rescue Droid - API Documentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <span class="logo-icon">🤖</span>
+                <h1>Search & Rescue Droid</h1>
+            </div>
+            
+            <div class="nav-section">
+                <h3 class="nav-title">Introduction</h3>
+                <a href="#overview" class="nav-link active">Overview</a>
+                <a href="#base-url" class="nav-link">Base URL</a>
+                <a href="#authentication" class="nav-link">Authentication</a>
+            </div>
+            
+            <div class="nav-section">
+                <h3 class="nav-title">Authentication</h3>
+                <a href="#signup" class="nav-link">Sign Up</a>
+                <a href="#signin" class="nav-link">Sign In</a>
+                <a href="#verify-email" class="nav-link">Verify Email</a>
+            </div>
+            
+            <div class="nav-section">
+                <h3 class="nav-title">Test Endpoints</h3>
+                <a href="#test-all" class="nav-link">Public Content</a>
+                <a href="#test-user" class="nav-link">User Content</a>
+                <a href="#test-admin" class="nav-link">Admin Content</a>
+                <a href="#test-common" class="nav-link">Common Content</a>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header" id="overview">
+                <h1>API Documentation</h1>
+                <p>This documentation provides comprehensive information about the Search and Rescue Droid API endpoints, including authentication, user management, and access control features.</p>
+            </div>
+            
+            <!-- Base URL Section -->
+            <div class="api-section" id="base-url">
+                <h2 class="section-title">Base URL</h2>
+                <p>All API endpoints are prefixed with:</p>
+                <div class="code-block">
+                    http://localhost:8080
+                </div>
+                <p><em>Currently running in localhost environment</em></p>
+            </div>
+            
+            <!-- Authentication Section -->
+            <div class="api-section" id="authentication">
+                <h2 class="section-title">Authentication</h2>
+                <p>The API uses JWT (JSON Web Tokens) for authentication. After signing in, you'll receive a token that must be included in the <code>Authorization</code> header of subsequent requests as <code>Bearer {token}</code>.</p>
+            </div>
+            
+            <!-- Sign Up -->
+            <div class="api-section" id="signup">
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="endpoint-path">/api/auth/signup</span>
+                        <span class="endpoint-title">Sign Up</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <div class="endpoint-description">
+                            <p>Register a new user account. After registration, an OTP will be sent to the provided email address for verification.</p>
+                        </div>
+                        
+                        <h3 class="subsection-title">Request Body</h3>
+                        <div class="code-block">
+{
+  "username": "newUser",
+  "email": "newuser@example.com",
+  "password": "newPassword",
+  "role": ["user"]
+}
+                        </div>
+                        
+                        <h3 class="subsection-title">Parameters</h3>
+                        <table class="params-table">
+                            <thead>
+                                <tr>
+                                    <th>Field</th>
+                                    <th>Type</th>
+                                    <th>Required</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="param-name">username</td>
+                                    <td class="param-type">string</td>
+                                    <td class="param-required">Yes</td>
+                                    <td>Unique username for the account</td>
+                                </tr>
+                                <tr>
+                                    <td class="param-name">email</td>
+                                    <td class="param-type">string</td>
+                                    <td class="param-required">Yes</td>
+                                    <td>Valid email address for verification</td>
+                                </tr>
+                                <tr>
+                                    <td class="param-name">password</td>
+                                    <td class="param-type">string</td>
+                                    <td class="param-required">Yes</td>
+                                    <td>Password (minimum 6 characters)</td>
+                                </tr>
+                                <tr>
+                                    <td class="param-name">role</td>
+                                    <td class="param-type">array[string]</td>
+                                    <td>No</td>
+                                    <td>User roles: admin, user, common. Default: common</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <h3 class="subsection-title">Response</h3>
+                        <div class="code-block">
+// Success (201 Created)
+{
+  "message": "User registered successfully! Please verify your email."
+}
+
+// Error (400 Bad Request)
+{
+  "error": "Error: Username is already taken!"
+}
+
+// Error (400 Bad Request)
+{
+  "error": "Error: Email is already registered!"
+}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sign In -->
+            <div class="api-section" id="signin">
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="endpoint-path">/api/auth/signin</span>
+                        <span class="endpoint-title">Sign In</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <div class="endpoint-description">
+                            <p>Authenticate a user and receive a JWT token for authorization. Email must be verified before login is allowed.</p>
+                        </div>
+                        
+                        <h3 class="subsection-title">Request Body</h3>
+                        <div class="code-block">
+{
+  "username": "exampleUser",
+  "password": "examplePassword"
+}
+                        </div>
+                        
+                        <h3 class="subsection-title">Parameters</h3>
+                        <table class="params-table">
+                            <thead>
+                                <tr>
+                                    <th>Field</th>
+                                    <th>Type</th>
+                                    <th>Required</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="param-name">username</td>
+                                    <td class="param-type">string</td>
+                                    <td class="param-required">Yes</td>
+                                    <td>Registered username</td>
+                                </tr>
+                                <tr>
+                                    <td class="param-name">password</td>
+                                    <td class="param-type">string</td>
+                                    <td class="param-required">Yes</td>
+                                    <td>User password</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <h3 class="subsection-title">Response</h3>
+                        <div class="code-block">
+// Success (200 OK)
+{
+  "token": "jwt-token",
+  "type": "Bearer",
+  "id": 1,
+  "username": "exampleUser",
+  "email": "user@example.com",
+  "roles": ["ROLE_USER"]
+}
+
+// Error - Email not verified (401 Unauthorized)
+{
+  "message": "Email not verified. Please verify your email to sign in."
+}
+
+// Error - Invalid credentials (401 Unauthorized)
+{
+  "error": "Invalid username or password"
+}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Verify Email -->
+            <div class="api-section" id="verify-email">
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="endpoint-path">/api/auth/verify-email</span>
+                        <span class="endpoint-title">Verify Email</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <div class="endpoint-description">
+                            <p>Verify a user's email address using the OTP sent during registration. OTP is valid for a limited time.</p>
+                        </div>
+                        
+                        <h3 class="subsection-title">Request URL</h3>
+                        <div class="code-block">
+/api/auth/verify-email?email=newuser@example.com&otp=123456
+                        </div>
+                        
+                        <h3 class="subsection-title">Query Parameters</h3>
+                        <table class="params-table">
+                            <thead>
+                                <tr>
+                                    <th>Parameter</th>
+                                    <th>Type</th>
+                                    <th>Required</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="param-name">email</td>
+                                    <td class="param-type">string</td>
+                                    <td class="param-required">Yes</td>
+                                    <td>Email address to verify</td>
+                                </tr>
+                                <tr>
+                                    <td class="param-name">otp</td>
+                                    <td class="param-type">string</td>
+                                    <td class="param-required">Yes</td>
+                                    <td>6-digit OTP code sent to email</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <h3 class="subsection-title">Response</h3>
+                        <div class="code-block">
+// Success (200 OK)
+{
+  "message": "Email verified successfully!"
+}
+
+// Error - Invalid OTP (400 Bad Request)
+{
+  "message": "Invalid or expired OTP"
+}
+
+// Error - User not found (404 Not Found)
+{
+  "error": "User not found"
+}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Test Endpoints -->
+            <div class="api-section">
+                <h2 class="section-title">Test Endpoints</h2>
+                <p>These endpoints demonstrate role-based access control and require appropriate JWT tokens in the <code>Authorization</code> header as <code>Bearer {token}</code>.</p>
+            </div>
+            
+            <!-- Public Content -->
+            <div class="api-section" id="test-all">
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="endpoint-path">/api/test/all</span>
+                        <span class="endpoint-title">Public Content</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <div class="endpoint-description">
+                            <p>Accessible to all users, no authentication required. This endpoint can be used to test basic API connectivity.</p>
+                        </div>
+                        
+                        <h3 class="subsection-title">Response</h3>
+                        <div class="code-block">
+"Public content accessible to all."
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- User Content -->
+            <div class="api-section" id="test-user">
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="endpoint-path">/api/test/user</span>
+                        <span class="endpoint-title">User Content</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <div class="endpoint-description">
+                            <p>Requires USER or ADMIN role. This endpoint tests user-level authorization.</p>
+                        </div>
+                        
+                        <h3 class="subsection-title">Headers</h3>
+                        <div class="code-block">
+Authorization: Bearer {your-jwt-token}
+                        </div>
+                        
+                        <h3 class="subsection-title">Response</h3>
+                        <div class="code-block">
+"User content — requires USER or higher."
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Admin Content -->
+            <div class="api-section" id="test-admin">
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="endpoint-path">/api/test/admin</span>
+                        <span class="endpoint-title">Admin Content</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <div class="endpoint-description">
+                            <p>Requires ADMIN role. This endpoint tests admin-level authorization.</p>
+                        </div>
+                        
+                        <h3 class="subsection-title">Headers</h3>
+                        <div class="code-block">
+Authorization: Bearer {your-jwt-token}
+                        </div>
+                        
+                        <h3 class="subsection-title">Response</h3>
+                        <div class="code-block">
+"Admin content — requires ADMIN role."
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Common Content -->
+            <div class="api-section" id="test-common">
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="endpoint-path">/api/test/common</span>
+                        <span class="endpoint-title">Common Content</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <div class="endpoint-description">
+                            <p>Requires COMMON, USER, or ADMIN role. This endpoint tests basic authenticated access.</p>
+                        </div>
+                        
+                        <h3 class="subsection-title">Headers</h3>
+                        <div class="code-block">
+Authorization: Bearer {your-jwt-token}
+                        </div>
+                        
+                        <h3 class="subsection-title">Response</h3>
+                        <div class="code-block">
+"Common content — requires COMMON role."
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Responses -->
+            <div class="api-section">
+                <h2 class="section-title">Common Error Responses</h2>
+                <div class="endpoint-card">
+                    <div class="endpoint-body">
+                        <h3 class="subsection-title">HTTP Status Codes</h3>
+                        <table class="params-table">
+                            <thead>
+                                <tr>
+                                    <th>Status Code</th>
+                                    <th>Meaning</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="param-name">200</td>
+                                    <td>OK</td>
+                                    <td>Request successful</td>
+                                </tr>
+                                <tr>
+                                    <td class="param-name">201</td>
+                                    <td>Created</td>
+                                    <td>Resource created successfully</td>
+                                </tr>
+                                <tr>
+                                    <td class="param-name">400</td>
+                                    <td>Bad Request</td>
+                                    <td>Invalid request parameters</td>
+                                </tr>
+                                <tr>
+                                    <td class="param-name">401</td>
+                                    <td>Unauthorized</td>
+                                    <td>Authentication required or failed</td>
+                                </tr>
+                                <tr>
+                                    <td class="param-name">403</td>
+                                    <td>Forbidden</td>
+                                    <td>Insufficient permissions</td>
+                                </tr>
+                                <tr>
+                                    <td class="param-name">404</td>
+                                    <td>Not Found</td>
+                                    <td>Resource not found</td>
+                                </tr>
+                                <tr>
+                                    <td class="param-name">500</td>
+                                    <td>Internal Server Error</td>
+                                    <td>Server error occurred</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
