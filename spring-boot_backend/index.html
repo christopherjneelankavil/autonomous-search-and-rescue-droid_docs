@@ -24,6 +24,7 @@
           <a href="#overview" class="nav-link active">Overview</a>
           <a href="#base-url" class="nav-link">Base URL</a>
           <a href="#authentication" class="nav-link">Authentication</a>
+          <a href="#missions" class="nav-link">Missions</a>
         </div>
 
         <div class="nav-section">
@@ -34,6 +35,14 @@
           <a href="#resend-otp" class="nav-link">Resend OTP</a>
           <a href="#forgot-password" class="nav-link">Forgot Password</a>
           <a href="#reset-password" class="nav-link">Reset Password</a>
+        </div>
+
+        <div class="nav-section">
+          <h3 class="nav-title">Missions</h3>
+          <a href="#get-missions" class="nav-link">Get Missions</a>
+          <a href="#add-mission" class="nav-link">Add Mission</a>
+          <a href="#update-mission" class="nav-link">Update Missions</a>
+          <a href="#delete-mission" class="nav-link">Delete Missions</a>
         </div>
 
         <div class="nav-section">
@@ -95,10 +104,10 @@
               <h3 class="subsection-title">Request Body</h3>
               <div class="code-block">
                 { 
-                    "username": "newUser", 
-                    "email": "newuser@example.com",
-                    "password": "newPassword", 
-                    "role": ["user"] 
+                  "username": "newUser", 
+                  "email": "newuser@example.com",
+                  "password": "newPassword", 
+                  "role": ["user"] 
                 }
               </div>
 
@@ -143,22 +152,18 @@
               <h3 class="subsection-title">Response</h3>
               <div class="code-block">
                 // Success (200 OK) 
-
                 "User registered successfully. Please verify
                 email. An OTP has been sent to your email address, which is
-                valid for 10 minutes."
-
+                valid for 10 minutes." 
+                
                 // Error (400 Bad Request) 
-
                 "Error: Username is already taken!" 
                 
-                // Error (400 Bad Request)
-
+                // Error (400 Bad Request) 
                 "Error: Email is already in use!" 
                 
                 // Error (500 Internal Server Error)
-
-                "Error: Failed to send verification email. Please try again 
+                "Error: Failed to send verification email. Please try again
                 later."
               </div>
             </div>
@@ -184,8 +189,8 @@
               <h3 class="subsection-title">Request Body</h3>
               <div class="code-block">
                 { 
-                    "username": "exampleUser", 
-                    "password": "examplePassword" 
+                  "username": "exampleUser", 
+                  "password": "examplePassword" 
                 }
               </div>
 
@@ -217,12 +222,22 @@
 
               <h3 class="subsection-title">Response</h3>
               <div class="code-block">
-                // Success (200 OK) { "token": "jwt-token", "type": "Bearer",
-                "id": 1, "username": "exampleUser", "email": "user@example.com",
-                "roles": ["ROLE_USER"] } // Error - Email not verified (400 Bad
-                Request) "Error: Email is not verified. Please verify your email
-                before logging in." // Error - Invalid credentials (401
-                Unauthorized) "Invalid username or password"
+                // Success (200 OK) 
+                { 
+                  "token": "jwt-token", 
+                  "type": "Bearer",
+                  "id": 1, 
+                  "username": "exampleUser", 
+                  "email": "user@example.com",
+                  "roles": ["ROLE_USER"] 
+                } 
+                
+                // Error - Email not verified (400 Bad Request) 
+                "Error: Email is not verified. Please verify your email
+                before logging in." 
+                
+                // Error - Invalid credentials (401 Unauthorized) 
+                "Invalid username or password"
               </div>
             </div>
           </div>
@@ -277,10 +292,16 @@
 
               <h3 class="subsection-title">Response</h3>
               <div class="code-block">
-                // Success (200 OK) "Email verified successfully." // Error -
-                Invalid OTP (400 Bad Request) "Invalid OTP." // Error - Expired
-                OTP (400 Bad Request) "OTP expired." // Error (500 Internal
-                Server Error) "Error: Failed to verify email. Please try again
+                // Success (200 OK) 
+                "Email verified successfully." 
+                
+                // Error - Invalid OTP (400 Bad Request) "Invalid OTP." 
+                
+                // Error - Expired OTP (400 Bad Request) 
+                "OTP expired." 
+                
+                // Error (500 Internal Server Error) 
+                "Error: Failed to verify email. Please try again
                 later."
               </div>
             </div>
@@ -330,10 +351,14 @@
 
               <h3 class="subsection-title">Response</h3>
               <div class="code-block">
-                // Success (200 OK) "OTP has been resent to your email address."
-                // Error - User not found (400 Bad Request) "Error: User not
-                found." // Error (500 Internal Server Error) "Error: Failed to
-                resend OTP. Please try again later."
+                // Success (200 OK) 
+                "OTP has been resent to your email address."
+
+                // Error - User not found (400 Bad Request) 
+                "Error: User not found." 
+                
+                // Error (500 Internal Server Error) 
+                "Error: Failed to resend OTP. Please try again later."
               </div>
             </div>
           </div>
@@ -382,10 +407,15 @@
 
               <h3 class="subsection-title">Response</h3>
               <div class="code-block">
-                // Success (200 OK) "An OTP has been sent to your email address
-                for password reset, which is valid for 10 minutes." // Error -
-                User not found (400 Bad Request) "Error: User not found." //
-                Error (500 Internal Server Error) "Error: Failed to send forgot
+                // Success (200 OK) 
+                "An OTP has been sent to your email address
+                for password reset, which is valid for 10 minutes." 
+                
+                // Error - User not found (400 Bad Request) 
+                "Error: User not found." 
+                
+                // Error (500 Internal Server Error) 
+                "Error: Failed to send forgot
                 password email. Please try again later."
               </div>
             </div>
@@ -410,8 +440,11 @@
 
               <h3 class="subsection-title">Request Body</h3>
               <div class="code-block">
-                { "email": "user@example.com", "otpCode": "123456",
-                "newPassword": "newSecurePassword" }
+                { 
+                  "email": "user@example.com", 
+                  "otpCode": "123456",
+                  "newPassword": "newSecurePassword" 
+                }
               </div>
 
               <h3 class="subsection-title">Parameters</h3>
@@ -448,12 +481,259 @@
 
               <h3 class="subsection-title">Response</h3>
               <div class="code-block">
-                // Success (200 OK) "Password reset successfully." // Error -
-                Invalid OTP (400 Bad Request) "Invalid OTP." // Error - Expired
-                OTP (400 Bad Request) "OTP expired." // Error - User not found
-                (400 Bad Request) "Error: User not found." // Error (500
-                Internal Server Error) "Error: Failed to reset password. Please
+                // Success (200 OK) 
+                "Password reset successfully." 
+                
+                // Error - Invalid OTP (400 Bad Request) 
+                "Invalid OTP." 
+                
+                // Error - Expired OTP (400 Bad Request) "OTP expired." 
+                
+                // Error - User not found (400 Bad Request) 
+                "Error: User not found." 
+                
+                // Error (500 Internal Server Error) 
+                "Error: Failed to reset password. Please
                 try again later."
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Missions Section -->
+        <div class="api-section" id="missions">
+          <h2 class="section-title">Missions</h2>
+          <p>
+            These endpoints manage search and rescue mission operations. All mission endpoints require
+            JWT authentication in the <code>Authorization</code> header as <code>Bearer {token}</code>.
+          </p>
+          <p>
+            Mission operations include creating, retrieving, updating, and deleting mission records with
+            the following details:
+          </p>
+          <ul class="mission-details">
+            <li><strong>spotName</strong>: Location name where the incident occurred</li>
+            <li><strong>noOfPersons</strong>: Number of persons involved in the incident</li>
+            <li><strong>contractTeamName</strong>: Name of the rescue team assigned</li>
+            <li><strong>healthStatus</strong>: Condition of the victims (e.g., Critical, Stable)</li>
+            <li><strong>timeOfEvent</strong>: Timestamp of when the incident occurred (ISO 8601 format)</li>
+            <li><strong>location</strong>: Geographic coordinates of the incident</li>
+          </ul>
+          <div class="permission-note">
+            <h4>Access Requirements:</h4>
+            <ul>
+              <li><strong>ADMIN</strong> role: Full CRUD access (Create, Read, Update, Delete)</li>
+              <li><strong>USER</strong> role: Can view, create, and update missions</li>
+              <li><strong>COMMON</strong> role: No access to mission endpoints</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Get All Missions -->
+        <div class="api-section" id="get-missions">
+          <div class="endpoint-card">
+            <div class="endpoint-header">
+              <span class="method get">GET</span>
+              <span class="endpoint-path">/api/missions</span>
+              <span class="endpoint-title">Get All Missions</span>
+            </div>
+            <div class="endpoint-body">
+              <div class="endpoint-description">
+                <p>
+                  Retrieve all mission records. Requires <strong>ADMIN</strong> or <strong>USER</strong> role.
+                </p>
+              </div>
+
+              <h3 class="subsection-title">Headers</h3>
+              <div class="code-block">
+                Authorization: Bearer {your-jwt-token}
+              </div>
+
+              <h3 class="subsection-title">Response</h3>
+              <div class="code-block">
+                // Success (200 OK)
+                [
+                  {
+                    "id": "507f1f77bcf86cd799439011",
+                    "spotName": "Mountain Rescue",
+                    "noOfPersons": 2,
+                    "contractTeamName": "Alpha Team",
+                    "healthStatus": "Stable",
+                    "timeOfEvent": "2025-07-08T14:30:00",
+                    "location": "40.7128° N, 74.0060° W"
+                  },
+                  {
+                    "id": "507f191e810c19729de860ea",
+                    "spotName": "Forest Search",
+                    "noOfPersons": 4,
+                    "contractTeamName": "Bravo Team",
+                    "healthStatus": "Critical",
+                    "timeOfEvent": "2025-07-07T10:15:00",
+                    "location": "34.0522° N, 118.2437° W"
+                  }
+                ]
+                
+                // Error (401 Unauthorized)
+                "Unauthorized: Full authentication is required"
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add Mission -->
+        <div class="api-section" id="add-mission">
+          <div class="endpoint-card">
+            <div class="endpoint-header">
+              <span class="method post">POST</span>
+              <span class="endpoint-path">/api/missions/add</span>
+              <span class="endpoint-title">Add Mission</span>
+            </div>
+            <div class="endpoint-body">
+              <div class="endpoint-description">
+                <p>
+                  Create a new mission record. Requires <strong>ADMIN</strong> or <strong>USER</strong> role.
+                  All fields are required and validated.
+                </p>
+              </div>
+
+              <h3 class="subsection-title">Headers</h3>
+              <div class="code-block">
+                Authorization: Bearer {your-jwt-token}
+                Content-Type: application/json
+              </div>
+
+              <h3 class="subsection-title">Request Body</h3>
+              <div class="code-block">
+                {
+                  "spotName": "Valley",
+                  "noOfPersons": 3,
+                  "contractTeamName": "Eagle Rescue",
+                  "healthStatus": "Critical",
+                  "timeOfEvent": "2025-07-08T14:30:00",
+                  "location": "35.6895° N, 139.6917° E"
+                }
+              </div>
+
+              <h3 class="subsection-title">Response</h3>
+              <div class="code-block">
+                // Success (200 OK)
+                "Mission added successfully."
+                
+                // Error (400 Bad Request)
+                "Mission details are incomplete or invalid."
+                
+                // Error (401 Unauthorized)
+                "Unauthorized: Full authentication is required"
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Update Mission -->
+        <div class="api-section" id="update-mission">
+          <div class="endpoint-card">
+            <div class="endpoint-header">
+              <span class="method put">PUT</span>
+              <span class="endpoint-path">/api/missions/update</span>
+              <span class="endpoint-title">Update Mission</span>
+            </div>
+            <div class="endpoint-body">
+              <div class="endpoint-description">
+                <p>
+                  Update an existing mission record. Requires <strong>ADMIN</strong> or <strong>USER</strong> role.
+                  Must include the mission ID in the request body.
+                </p>
+              </div>
+
+              <h3 class="subsection-title">Headers</h3>
+              <div class="code-block">
+                Authorization: Bearer {your-jwt-token}
+                Content-Type: application/json
+              </div>
+
+              <h3 class="subsection-title">Request Body</h3>
+              <div class="code-block">
+                {
+                  "id": "507f1f77bcf86cd799439011",
+                  "spotName": "Updated Valley",
+                  "noOfPersons": 4,
+                  "contractTeamName": "Eagle Rescue",
+                  "healthStatus": "Stable",
+                  "timeOfEvent": "2025-07-08T15:45:00",
+                  "location": "35.6895° N, 139.6917° E"
+                }
+              </div>
+
+              <h3 class="subsection-title">Response</h3>
+              <div class="code-block">
+                // Success (200 OK)
+                "Mission updated successfully."
+                
+                // Error (400 Bad Request)
+                "Mission details are incomplete or invalid."
+                
+                // Error (404 Not Found)
+                "Mission not found with ID: {id}"
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Delete Mission -->
+        <div class="api-section" id="delete-mission">
+          <div class="endpoint-card">
+            <div class="endpoint-header">
+              <span class="method delete">DELETE</span>
+              <span class="endpoint-path">/api/missions/delete/{id}</span>
+              <span class="endpoint-title">Delete Mission</span>
+            </div>
+            <div class="endpoint-body">
+              <div class="endpoint-description">
+                <p>
+                  Permanently delete a mission record. Requires <strong>ADMIN</strong> role.
+                </p>
+              </div>
+
+              <h3 class="subsection-title">Headers</h3>
+              <div class="code-block">
+                Authorization: Bearer {your-jwt-token}
+              </div>
+
+              <h3 class="subsection-title">Path Parameters</h3>
+              <table class="params-table">
+                <thead>
+                  <tr>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                    <th>Required</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="param-name">id</td>
+                    <td class="param-type">string</td>
+                    <td class="param-required">Yes</td>
+                    <td>MongoDB ObjectId of the mission to delete</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <h3 class="subsection-title">Example Request</h3>
+              <div class="code-block">
+                DELETE /api/missions/delete/686d1c82f0c9240150cec2b7
+              </div>
+
+              <h3 class="subsection-title">Response</h3>
+              <div class="code-block">
+                // Success (200 OK)
+                "Mission deleted successfully."
+                
+                // Error (400 Bad Request)
+                "Error deleting mission: {error message}"
+                
+                // Error (403 Forbidden)
+                "Access Denied: Requires ADMIN role"
               </div>
             </div>
           </div>
