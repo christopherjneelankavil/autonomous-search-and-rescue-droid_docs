@@ -31,6 +31,7 @@
           <h3 class="nav-title">Authentication</h3>
           <a href="#signup" class="nav-link">Sign Up</a>
           <a href="#signin" class="nav-link">Sign In</a>
+          <a href="#refresh-token" class="nav-link">Refresh Token</a>
           <a href="#verify-email" class="nav-link">Verify Email</a>
           <a href="#resend-otp" class="nav-link">Resend OTP</a>
           <a href="#forgot-password" class="nav-link">Forgot Password</a>
@@ -238,6 +239,44 @@
                 
                 // Error - Invalid credentials (401 Unauthorized) 
                 "Invalid username or password"
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Refresh token -->
+
+        <div class="api-section", id="refresh-token">
+          <div class="endpoint-card">
+            <div class="endpoint-header">
+              <span class="method post">POST</span>
+              <span class="endpoint-path">/api/auth/refresh-token</span>
+              <span class="endpoint-title">Refresh Token</span>
+            </div>
+            <div class="endpoint-body">
+              <div class="endpoint-description">
+                <p>
+                  Refresh the JWT access token using a valid refresh token. This is
+                  useful for maintaining user sessions without requiring them to
+                  log in again.
+                </p>
+              </div>
+              <div class="subsection-title">Request URL</div>
+              <div class="code-block">
+                http://localhost:8080/api/auth/refresh-token
+              </div>
+              <div class="subsection-title">Request Body</div>
+              <div class="code-block">
+                {
+                  "refreshToken" : "41e9a029-0fd6-4213-a713-67ace3898f27"
+                }
+              </div>
+              <div class="subsection-title">Response</div>
+              <div class="code-block">
+                {
+                  "token" : "67ace3898f2741e9a029-0fd6-a713-898f2741e9a029-0fd6-4213-a713-67ace3898f27",
+                  "refreshToken" : "41e9a029-0fd6-4213-a713-67ace3898f27"
+                }
               </div>
             </div>
           </div>
